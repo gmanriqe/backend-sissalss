@@ -3,9 +3,9 @@ const router = express.Router();
 
 const mysqlConnection  = require('../database.js');
 
-// GET all usuarios
-router.get('/api/usuarios', (req, res) => {
-  mysqlConnection.query('SELECT * FROM usuarios', (err, rows, fields) => {
+// GET all clientes
+router.get('/api/clientes', (req, res) => {
+  mysqlConnection.query('SELECT * FROM clientes', (err, rows, fields) => {
     if(!err) {
       res.json(rows);
     } else {
