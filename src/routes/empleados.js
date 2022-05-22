@@ -3,6 +3,7 @@ const router = express.Router();
 
 const mysqlConnection = require('../database.js');
 
+// INSERT An Employee
 const addEmpleados = (req, res) => {
     const {
         nombres,
@@ -46,6 +47,6 @@ const addEmpleados = (req, res) => {
 }
 
 // router.get('/api/v1/empleados', getEmpleados)
-router.post('/api/v1/empleados', addEmpleados)
+router.post('/api/v1/addEmpleados', addEmpleados)
 
 module.exports = router;
