@@ -2,8 +2,9 @@
 ## Development Team
 Gonzales Manrique, Jesús Gonzales
 
-## Design (Adobe XD)
-Click to link
+## JWT (expiresIn)
+1 minute => 60
+5 minutes => 60 * 5
 
 ## Run project
 node src/index.js

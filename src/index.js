@@ -12,11 +12,12 @@ app.set('port', process.env.PORT || 8000);
 app.use(express.json());
 
 // Routes
-// app.use(require('./routes/employees'));
+app.use(require('./routes/auth'));
 app.use(require('./routes/usuarios'));
 app.use(require('./routes/clientes'));
 app.use(require('./routes/empleados'));
 app.use(require('./routes/medios-pago'));
+app.use(require('./routes/citas'));
 
 // Starting the server
 app.listen(app.get('port'), () => {
