@@ -77,22 +77,6 @@ const listCita = (req, res) => {
             });
         });
     });
-
-    // jwt.verify(req.token, 'secret', (err, authData) => {
-    //     if (err) {
-    //         res.status(403).json({
-    //             status: '403',
-    //             message: 'No tienes autorizacion para acceder a este recurso',
-    //         });
-    //     }
-
-    //     return res.status(200).json({
-    //         status: '200',
-    //         message: 'Lista de citas con éxito',
-    //         authData,
-    //         data: JSON.stringify(rows)
-    //     });
-    // });
 }
 
 
