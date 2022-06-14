@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const mysqlConnection = require('../database.js');
+const mysqlConnection = require('./../../connections/database');
 
 // INSERT An Employee
 const addEmpleados = (req, res) => {

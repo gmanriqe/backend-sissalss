@@ -4,7 +4,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken'); // Token generator
 const bcrypt = require('bcrypt'); // Password hashing
 
-const mysqlConnection = require('../database.js');
+const mysqlConnection = require('./../../connections/database');
 
 router.post('/api/v1/login', (req, res) => {
     const { username, password } = req.body;

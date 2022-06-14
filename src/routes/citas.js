@@ -4,7 +4,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken'); // JWT
 const verifyToken = require('./verify-token.js');
 
-const mysqlConnection = require('../database.js');
+const mysqlConnection = require('./../../connections/database');
 
 // INSERT An quote
 const addCita = (req, res) => {
