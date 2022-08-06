@@ -5,7 +5,7 @@ const environment = `PRODUCCION`;
 let mysqlConnection;
 
 if (environment === `DESARROLLO`) {
-    mysqlConnection = mysql.createConnection({
+    mysqlConnection = mysql.createPool({
         host: 'localhost',
         user: 'root',
         password: 'password',
@@ -13,7 +13,7 @@ if (environment === `DESARROLLO`) {
         multipleStatements: true
     });
 } else if (environment == 'PRODUCCION') {
-    mysqlConnection = mysql.createConnection({
+    mysqlConnection = mysql.createPool({
         host: 'us-cdbr-east-05.cleardb.net',
         user: 'bce424573c357c',
         password: '2ea94c75',
@@ -22,13 +22,21 @@ if (environment === `DESARROLLO`) {
     });
 }
 
-mysqlConnection.connect(function (err) {
-    if (err) {
-        console.error(err);
-        return;
-    } else {
-        console.log('db is connected');
-    }
-});
+// mysqlConnection.connect(function (err) {
+//     if (err) {
+//         console.error(err.stack);
+//         return;
+//     } else {
+//         console.log('db is connected');
+//     }
+// });
+
+mysqlConnection.query('select 1 + 1', (err, rows) => {
+    if (err) return err.stack;   
+
+    console.log('db is connected');
+})
+
+
 
 module.exports = mysqlConnection;

@@ -8,10 +8,9 @@ const mysqlConnection = require('./../../connections/database');
 
 router.post('/api/v1/login', (req, res) => {
     const { username, password } = req.body;
-
+    console.log(req.body)
     // 1ero: Consulto a la BD si existe el usuario
     const query = `SELECT * FROM usuario WHERE usuario = '${username}'`;
-
     mysqlConnection.query(query, (err, rows, fields) => {
         if (err) {
             res.status(500).json({
@@ -20,7 +19,6 @@ router.post('/api/v1/login', (req, res) => {
                 error: err,
             });
         }
-
         // 2do: Bcryp para comparar la contraseña
         if (rows.length > 0) {
             bcrypt.compare(password, rows[0].contrasenia, (err, result) => {
@@ -34,7 +32,8 @@ router.post('/api/v1/login', (req, res) => {
 
                 if(result) {
                     // 3ro: Genero el token
-                    const token = jwt.sign({ id: rows[0].id }, 'secret', { expiresIn: 5 * 60 });
+                    // const token = jwt.sign({ id: rows[0].id }, 'secret', { expiresIn: 5 * 60 });
+                    const token = jwt.sign({ id: rows[0].id }, 'secret', { expiresIn: 5 * 500 });
         
                     res.status(200).json({
                         status: '200',

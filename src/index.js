@@ -13,11 +13,14 @@ app.use(express.json());
 
 // Routes
 app.use(require('./routes/auth'));
+app.use(require('./routes/clients'));
+
+
 app.use(require('./routes/usuarios'));
-app.use(require('./routes/clientes'));
 app.use(require('./routes/empleados'));
 app.use(require('./routes/medios-pago'));
 app.use(require('./routes/citas'));
+app.use(require('./routes/tipo-documento'));
 
 // Starting the server
 app.listen(app.get('port'), () => {

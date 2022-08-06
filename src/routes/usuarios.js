@@ -5,7 +5,7 @@ const mysqlConnection = require('./../../connections/database');
 
 // GET all usuarios
 router.get('/api/usuarios', (req, res) => {
-  mysqlConnection.query('SELECT * FROM usuarios', (err, rows, fields) => {
+  mysqlConnection.query('SELECT * FROM usuario', (err, rows, fields) => {
     if(!err) {
       res.json(rows);
     } else {

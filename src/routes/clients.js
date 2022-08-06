@@ -1,18 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('./verify-token.js');
+const mysqlConnection = require('../../connections/database');
 
-const mysqlConnection = require('./../../connections/database');
+const listClients = (req, res) => {
+	mysqlConnection.query('SELECT * FROM cliente', (err, rows) => {
+        if(err) {
+            res.status(500).json({
+                status: '500',
+                message: 'Error al listar los clientes',
+                error: err,
+            });
+        }
 
-const listCliente = (req, res) => {
-	mysqlConnection.query('SELECT * FROM clientes', (err, rows, fields) => {
-		if (!err) {
-			res.json(rows);
-		} else {
-			console.log(err);
-		}
+        return res.status(200).json({
+            status: '200',
+            message: 'Lista de clientes',
+            data: JSON.stringify(rows)
+        });
 	});
 }
 
+/*
 const addCliente = (req, res) => {
 	const {
 		nombres,
@@ -54,10 +63,11 @@ const addCliente = (req, res) => {
 			}
 		});
 }
+*/
 
-// GET all clientes
-router.get('/api/v1/list_clientes', listCliente);
+// GET all clients
+router.get('/api/v1/list_clients', listClients);
 // INSERT An client
-router.post('/api/v1/add_clientes', addCliente);
+// router.post('/api/v1/add_clientes', addCliente);
 
 module.exports = router;
