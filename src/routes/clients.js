@@ -66,7 +66,7 @@ const addCliente = (req, res) => {
 */
 
 // GET all clients
-router.get('/api/v1/list_clients', listClients);
+router.get('/api/v1/list_clients', verifyToken, listClients);
 // INSERT An client
 // router.post('/api/v1/add_clientes', addCliente);
 
