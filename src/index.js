@@ -1,5 +1,5 @@
-const cors = require('cors');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 // Cors
@@ -15,14 +15,13 @@ app.use(express.json());
 app.use(require('./routes/auth'));
 app.use(require('./routes/clients'));
 
-
+/*
 app.use(require('./routes/usuarios'));
 app.use(require('./routes/empleados'));
 app.use(require('./routes/medios-pago'));
 app.use(require('./routes/citas'));
 app.use(require('./routes/tipo-documento'));
+*/
 
 // Starting the server
-app.listen(app.get('port'), () => {
-  console.log(`Server on port ${app.get('port')}`);
-});
+app.listen(app.get('port'), () => console.log(`Server on port.. ${app.get('port')}`) );

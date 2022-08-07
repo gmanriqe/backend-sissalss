@@ -1,16 +1,16 @@
+// 1ero paquetes de terceros
+const jwt = require('jsonwebtoken'); // JWT
+const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
-
-const jwt = require('jsonwebtoken'); // Token generator
-const bcrypt = require('bcrypt'); // Password hashing
-
+// 2do mis paquetes
 const mysqlConnection = require('./../../connections/database');
+const config = require('../../config.json')
 
 router.post('/api/v1/login', (req, res) => {
     const { username, password } = req.body;
-    console.log(req.body)
-    // 1ero: Consulto a la BD si existe el usuario
     const query = `SELECT * FROM usuario WHERE usuario = '${username}'`;
+
     mysqlConnection.query(query, (err, rows, fields) => {
         if (err) {
             res.status(500).json({
@@ -19,7 +19,7 @@ router.post('/api/v1/login', (req, res) => {
                 error: err,
             });
         }
-        // 2do: Bcryp para comparar la contraseña
+        // Bcryp para comparar la contraseña
         if (rows.length > 0) {
             bcrypt.compare(password, rows[0].contrasenia, (err, result) => {
                 if (err) {
@@ -31,9 +31,14 @@ router.post('/api/v1/login', (req, res) => {
                 }
 
                 if(result) {
-                    // 3ro: Genero el token
-                    // const token = jwt.sign({ id: rows[0].id }, 'secret', { expiresIn: 5 * 60 });
-                    const token = jwt.sign({ id: rows[0].id }, 'secret', { expiresIn: 5 * 500 });
+                    // Generar el token
+                    const user = {
+                        id: rows[0].id,
+                        usuario: rows[0].usuario,
+                        email: rows[0].email,
+                        id_rol: rows[0].id_rol,
+                    }
+                    const token = jwt.sign(user, config.secret, { expiresIn: config.token_expiration });
         
                     res.status(200).json({
                         status: '200',
