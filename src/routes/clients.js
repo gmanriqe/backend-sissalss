@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const verifyToken = require('./verify-token.js');
 const mysqlConnection = require('../../connections/database');
+const config = require('../../config.json')
 
-const listClients = (req, res) => {
+const listClients = async (req, res) => {
 	mysqlConnection.query('SELECT * FROM cliente', (err, rows) => {
         if(err) {
             res.status(500).json({
@@ -66,7 +67,7 @@ const addCliente = (req, res) => {
 */
 
 // GET all clients
-router.get('/api/v1/list_clients', verifyToken, listClients);
+router.get(`${config.endpoint_path}/list_clients`, verifyToken, listClients);
 // INSERT An client
 // router.post('/api/v1/add_clientes', addCliente);
 

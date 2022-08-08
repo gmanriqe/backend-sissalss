@@ -1,8 +1,8 @@
 {
-    "endpoint_path": "/api/v1",
+    "endpoint_path": "/v1/auth",
     "port": 8000,
     "secret": "secret",
     "refresh_secret": "refresh_secret",
-    "token_expiration": 3600,
+    "token_expiration": 60,
     "refresh_token_expiration": 86400
 }
