@@ -34,21 +34,24 @@ router.post('/api/v1/login', (req, res) => {
                         error: err,
                     });
                 }
-                console.log(rows[0])
+
                 if(result) {
-                    // Generar el token
+
                     const user = {
                         id: rows[0].id,
                         usuario: rows[0].usuario,
                         email: rows[0].email,
                         rol: rows[0].nombre,
                     }
+
                     const token = jwt.sign(user, config.secret, { expiresIn: config.token_expiration });
-        
+                    const refreshToken = jwt.sign(user, config.refresh_secret, { expiresIn: config.refresh_token_expiration });
+
                     res.status(200).json({
                         status: '200',
                         message: 'Inicio de sesion exitoso',
                         token: token,
+                        refreshToken: refreshToken
                     });
                 }
                 else {
