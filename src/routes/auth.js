@@ -9,7 +9,11 @@ const config = require('../../config.json')
 
 router.post('/api/v1/login', (req, res) => {
     const { username, password } = req.body;
-    const query = `SELECT * FROM usuario WHERE usuario = '${username}'`;
+
+    const query = `SELECT * FROM usuario
+    INNER JOIN rol
+    ON usuario.id_rol = rol.id
+    WHERE usuario = '${username}' OR email = '${username}'`;
 
     mysqlConnection.query(query, (err, rows, fields) => {
         if (err) {
@@ -19,6 +23,7 @@ router.post('/api/v1/login', (req, res) => {
                 error: err,
             });
         }
+        
         // Bcryp para comparar la contraseña
         if (rows.length > 0) {
             bcrypt.compare(password, rows[0].contrasenia, (err, result) => {
@@ -29,14 +34,14 @@ router.post('/api/v1/login', (req, res) => {
                         error: err,
                     });
                 }
-
+                console.log(rows[0])
                 if(result) {
                     // Generar el token
                     const user = {
                         id: rows[0].id,
                         usuario: rows[0].usuario,
                         email: rows[0].email,
-                        id_rol: rows[0].id_rol,
+                        rol: rows[0].nombre,
                     }
                     const token = jwt.sign(user, config.secret, { expiresIn: config.token_expiration });
         
