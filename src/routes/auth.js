@@ -7,28 +7,28 @@ const router = express.Router();
 const mysqlConnection = require('./../../connections/database');
 const config = require('../../config.json')
 
-router.post('/api/v1/login', (req, res) => {
+router.post(`${config.endpoint_path}/login`, (req, res) => {
     const { username, password } = req.body;
 
-    const query = `SELECT * FROM usuario
+    const query = `SELECT * FROM users
     INNER JOIN rol
-    ON usuario.id_rol = rol.id
-    WHERE usuario = '${username}' OR email = '${username}'`;
+    ON users.id_rol = rol.id
+    WHERE username = '${username}' OR email = '${username}'`;
 
     mysqlConnection.query(query, (err, rows, fields) => {
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 status: '500',
                 message: 'Error al iniciar sesion',
                 error: err,
             });
         }
-        
+
         // Bcryp para comparar la contraseña
         if (rows.length > 0) {
-            bcrypt.compare(password, rows[0].contrasenia, (err, result) => {
+            bcrypt.compare(password, rows[0].password, (err, result) => {
                 if (err) {
-                    res.status(500).json({
+                    return res.status(500).json({
                         status: '500',
                         message: 'Error al iniciar sesion',
                         error: err,
@@ -47,7 +47,7 @@ router.post('/api/v1/login', (req, res) => {
                     const token = jwt.sign(user, config.secret, { expiresIn: config.token_expiration });
                     const refreshToken = jwt.sign(user, config.refresh_secret, { expiresIn: config.refresh_token_expiration });
 
-                    res.status(200).json({
+                    return res.status(200).json({
                         status: '200',
                         message: 'Inicio de sesion exitoso',
                         token: token,
@@ -55,14 +55,14 @@ router.post('/api/v1/login', (req, res) => {
                     });
                 }
                 else {
-                    res.status(401).json({
+                    return res.status(401).json({
                         status: '401',
                         message: 'Contraseña incorrecta',
                     });
                 }
             });
         } else {
-            res.status(401).json({
+            return res.status(401).json({
                 status: '401',
                 message: 'Usuario no existe',
             });
