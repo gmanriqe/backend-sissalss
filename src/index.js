@@ -14,6 +14,7 @@ app.use(express.json());
 // Routes
 app.use(require('./routes/auth'));
 app.use(require('./routes/refresh-token'));
+app.use(require('./routes/menu'));
 app.use(require('./routes/clients'));
 
 /*

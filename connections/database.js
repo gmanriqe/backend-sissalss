@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const environment = `PRODUCCION`;
+const environment = `DESARROLLO`;
 
 let mysqlConnection;
 
@@ -9,7 +9,7 @@ if (environment === `DESARROLLO`) {
         host: 'localhost',
         user: 'root',
         password: 'password',
-        database: 'sissalss',
+        database: 'sissalss_bd',
         multipleStatements: true
     });
 } else if (environment == 'PRODUCCION') {
